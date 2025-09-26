@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-template
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: testing
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: supersecretpassword
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      start_period: 10s      
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "127.0.0.1:5432:5432"
+  
+  rustfs:
+    image: rustfs/rustfs:latest
+    container_name: rustfs-template
+    restart: unless-stopped
+    environment:
+      RUSTFS_ACCESS_KEY: rustfs
+      RUSTFS_SECRET_KEY: supersecretkey
+      RUSTFS_ADDRESS: 0.0.0.0:9000
+      RUSTFS_API_BASE_URL: http://rustfs:9000
+    volumes:
+      - rustfs-data:/rustfs
+    ports:
+      - "127.0.0.1:9000:9000"
+
+volumes:
+  postgres-data:
+  rustfs-data:
