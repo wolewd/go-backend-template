@@ -13,15 +13,6 @@ type Response struct {
 	Meta    interface{} `json:"meta,omitempty"`
 }
 
-type Pagination struct {
-	Total       int  `json:"total"`
-	Page        int  `json:"page"`
-	Limit       int  `json:"limit"`
-	TotalPages  int  `json:"total_pages"`
-	HasPrevPage bool `json:"has_prev_page"`
-	HasNextPage bool `json:"has_next_page"`
-}
-
 func JSON(w http.ResponseWriter, status int, payload Response) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
@@ -36,19 +27,28 @@ func Success(w http.ResponseWriter, data interface{}, message string) {
 	})
 }
 
+func Error(w http.ResponseWriter, status int, message string, errs interface{}) {
+	JSON(w, status, Response{
+		Success: false,
+		Message: message,
+		Errors:  errs,
+	})
+}
+
+type Pagination struct {
+	Total       int  `json:"total"`
+	Page        int  `json:"page"`
+	Limit       int  `json:"limit"`
+	TotalPages  int  `json:"total_pages"`
+	HasPrevPage bool `json:"has_prev_page"`
+	HasNextPage bool `json:"has_next_page"`
+}
+
 func SuccessWithPagination(w http.ResponseWriter, data interface{}, message string, meta Pagination) {
 	JSON(w, http.StatusOK, Response{
 		Success: true,
 		Message: message,
 		Data:    data,
 		Meta:    meta,
-	})
-}
-
-func Error(w http.ResponseWriter, status int, message string, errs interface{}) {
-	JSON(w, status, Response{
-		Success: false,
-		Message: message,
-		Errors:  errs,
 	})
 }

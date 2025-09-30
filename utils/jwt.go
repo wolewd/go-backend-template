@@ -6,12 +6,6 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-type Claims struct {
-	UserID string `json:"user_id"`
-	Role   string `json:"role,omitempty"`
-	jwt.RegisteredClaims
-}
-
 var (
 	jwtAccessSecret  []byte
 	jwtRefreshSecret []byte
@@ -24,6 +18,12 @@ func init() {
 	jwtRefreshSecret = GetEnvBytes("JWT_REFRESH_SECRET", "default-refresh-secret")
 	accessTokenTTL = GetEnvInt("JWT_ACCESS_TTL_MINUTES", 15)
 	refreshTokenTTL = GetEnvInt("JWT_REFRESH_TTL_DAYS", 7)
+}
+
+type Claims struct {
+	UserID string `json:"user_id"`
+	Role   string `json:"role,omitempty"`
+	jwt.RegisteredClaims
 }
 
 func GenerateAccessToken(userID, role string) (string, error) {
