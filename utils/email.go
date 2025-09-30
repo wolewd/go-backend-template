@@ -141,7 +141,7 @@ func SendEmailWithCC(to, cc, subject, templatePath string, data interface{}) err
 	addr := fmt.Sprintf("%s:%s", config.SMTPHost, config.SMTPPort)
 
 	if err := smtp.SendMail(addr, auth, config.FromEmail, allRecipients, []byte(message)); err != nil {
-		return fmt.Errorf("failed to send email (to=%s, subject=%s): %w", to, subject, err)
+		return fmt.Errorf("failed to send email (to=%s, cc=%s, subject=%s): %w", to, cc, subject, err)
 	}
 
 	return nil
@@ -213,7 +213,7 @@ func SendVerificationEmail(userEmail, userName, token string) error {
 <h2>Hello {{.TeamName}},</h2>
 <p>We are excited to announce: <b>{{.Message}}</b></p>
 <p>Date: {{.Date}}</p>
-<p>regards Admin Team</p>
+<p>regards, Admin Team</p>
 </body>
 </html>
 
