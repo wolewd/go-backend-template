@@ -67,6 +67,7 @@ func buildPath(prefix, fileName string) string {
 
 // Example: UploadFile("bucket", "uploads/images", "photo.jpg", data, "image/jpeg")
 // Result: uploads/images/photo.jpg
+// prefix is optional, use "" for root level
 func UploadFile(bucketName, prefix, fileName string, data []byte, contentType string) (string, error) {
 	client, err := getS3Client()
 	if err != nil {
@@ -87,6 +88,7 @@ func UploadFile(bucketName, prefix, fileName string, data []byte, contentType st
 
 // Example: UploadFileWithUUID("bucket", "users/avatars", "photo.jpg", data, "image/jpeg")
 // Result: users/avatars/01936b3e-4d2a-7890-abcd-ef1234567890.jpg
+// prefix is optional, use "" for root level
 func UploadFileWithUUID(bucketName, prefix, originalFileName string, data []byte, contentType string) (string, error) {
 	client, err := getS3Client()
 	if err != nil {
@@ -109,6 +111,7 @@ func UploadFileWithUUID(bucketName, prefix, originalFileName string, data []byte
 }
 
 // Example: FileExists("bucket", "uploads/images", "photo.jpg")
+// prefix is optional, use "" for root level
 func FileExists(bucketName, prefix, fileName string) (bool, error) {
 	client, err := getS3Client()
 	if err != nil {
@@ -128,6 +131,7 @@ func FileExists(bucketName, prefix, fileName string) (bool, error) {
 }
 
 // Example: DeleteFile("bucket", "uploads/images", "photo.jpg")
+// prefix is optional, use "" for root level
 func DeleteFile(bucketName, prefix, fileName string) error {
 	client, err := getS3Client()
 	if err != nil {
@@ -139,6 +143,7 @@ func DeleteFile(bucketName, prefix, fileName string) error {
 }
 
 // Example: DownloadPublicFile("bucket", "uploads/images", "photo.jpg")
+// prefix is optional, use "" for root level
 func DownloadPublicFile(bucketName, prefix, fileName string) string {
 	endpoint := GetEnv("S3_ENDPOINT", "")
 	useSSL := GetEnv("S3_SSL", "false")
@@ -153,6 +158,7 @@ func DownloadPublicFile(bucketName, prefix, fileName string) string {
 }
 
 // Example: DownloadPrivateFile("bucket", "private/docs", "document.pdf", time.Hour)
+// prefix is optional, use "" for root level
 func DownloadPrivateFile(bucketName, prefix, fileName string, expiry time.Duration) (string, error) {
 	client, err := getS3Client()
 	if err != nil {

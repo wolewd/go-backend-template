@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h1>Hello {{.Name}}, thank you for joining our website</h1>
+    <p>Please verify your account with this button bellow to start using our product</p>
+    <a href="{{.VerifyURL}}">Verify Account</a>
+    <p>This link will expire in {{.ExpiredTime}}</p>
+    <p>Send another verification request if the activation url is expired, thank you.</p>
+</body>
+</html>
