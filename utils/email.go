@@ -10,12 +10,6 @@ import (
 	"sync"
 )
 
-var (
-	emailConfig     *EmailConfig
-	emailConfigOnce sync.Once
-	emailInitErr    error
-)
-
 type EmailConfig struct {
 	SMTPHost     string
 	SMTPPort     string
@@ -24,6 +18,12 @@ type EmailConfig struct {
 	FromEmail    string
 	FromName     string
 }
+
+var (
+	emailConfig     *EmailConfig
+	emailConfigOnce sync.Once
+	emailInitErr    error
+)
 
 func getEmailConfig() (*EmailConfig, error) {
 	emailConfigOnce.Do(func() {
