@@ -1,6 +1,8 @@
 package config
 
 import (
+	"go-template/utils"
+
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -10,7 +12,7 @@ type Config struct {
 
 func InitConfig() (*Config, error) {
 	// init db
-	database, err := ConnectDB()
+	database, err := utils.ConnectDB()
 	if err != nil {
 		return nil, err
 	}

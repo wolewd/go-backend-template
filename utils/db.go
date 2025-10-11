@@ -1,22 +1,20 @@
-package config
+package utils
 
 import (
 	"context"
 	"fmt"
 	"log"
 
-	"go-template/utils"
-
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 func ConnectDB() (*pgxpool.Pool, error) {
-	dbuser := utils.GetEnv("DB_USER", "")
-	dbpassword := utils.GetEnv("DB_PASSWORD", "")
-	dbhost := utils.GetEnv("DB_HOST", "")
-	dbport := utils.GetEnv("DB_PORT", "")
-	dbname := utils.GetEnv("DB_NAME", "")
-	dbsslmode := utils.GetEnv("DB_SSL_MODE", "disable")
+	dbuser := GetEnv("DB_USER", "")
+	dbpassword := GetEnv("DB_PASSWORD", "")
+	dbhost := GetEnv("DB_HOST", "")
+	dbport := GetEnv("DB_PORT", "")
+	dbname := GetEnv("DB_NAME", "")
+	dbsslmode := GetEnv("DB_SSL_MODE", "disable")
 
 	if dbuser == "" || dbpassword == "" || dbhost == "" || dbport == "" || dbname == "" {
 		return nil, fmt.Errorf("DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, and DB_NAME must be set in environment variables")
