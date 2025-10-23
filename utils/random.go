@@ -7,11 +7,11 @@ import (
 )
 
 // usage example token := utils.GenerateRandomString(16)
-func GenerateRandomString(n int) string {
-	b := make([]byte, n)
-	_, err := rand.Read(b)
+func GenerateRandomString(nSize int) string {
+	byteData := make([]byte, nSize)
+	_, err := rand.Read(byteData)
 	if err != nil {
 		log.Fatalf("Failed to generate random string: %v", err)
 	}
-	return base64.URLEncoding.EncodeToString(b)
+	return base64.URLEncoding.EncodeToString(byteData)
 }

@@ -6,29 +6,29 @@ import (
 )
 
 type Response struct {
-	Success bool        `json:"success"`
-	Message string      `json:"message,omitempty"`
-	Data    interface{} `json:"data,omitempty"`
-	Errors  interface{} `json:"errors,omitempty"`
-	Meta    interface{} `json:"meta,omitempty"`
+	Success bool   `json:"success"`
+	Message string `json:"message,omitempty"`
+	Data    any    `json:"data,omitempty"`
+	Errors  any    `json:"errors,omitempty"`
+	Meta    any    `json:"meta,omitempty"`
 }
 
-func JSON(w http.ResponseWriter, status int, payload Response) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
-	_ = json.NewEncoder(w).Encode(payload)
+func JSON(write http.ResponseWriter, status int, payload Response) {
+	write.Header().Set("Content-Type", "application/json")
+	write.WriteHeader(status)
+	_ = json.NewEncoder(write).Encode(payload)
 }
 
-func Success(w http.ResponseWriter, data interface{}, message string) {
-	JSON(w, http.StatusOK, Response{
+func Success(write http.ResponseWriter, data any, message string) {
+	JSON(write, http.StatusOK, Response{
 		Success: true,
 		Message: message,
 		Data:    data,
 	})
 }
 
-func Error(w http.ResponseWriter, status int, message string, errs interface{}) {
-	JSON(w, status, Response{
+func Error(write http.ResponseWriter, status int, message string, errs any) {
+	JSON(write, status, Response{
 		Success: false,
 		Message: message,
 		Errors:  errs,
@@ -44,8 +44,8 @@ type Pagination struct {
 	HasNextPage bool `json:"has_next_page"`
 }
 
-func SuccessWithPagination(w http.ResponseWriter, data interface{}, message string, meta Pagination) {
-	JSON(w, http.StatusOK, Response{
+func SuccessWithPagination(write http.ResponseWriter, data any, message string, meta Pagination) {
+	JSON(write, http.StatusOK, Response{
 		Success: true,
 		Message: message,
 		Data:    data,

@@ -9,8 +9,8 @@ import (
 
 var validate = validator.New()
 
-func ValidateStruct(s interface{}) []string {
-	err := validate.Struct(s)
+func ValidateStruct(structure any) []string {
+	err := validate.Struct(structure)
 	if err == nil {
 		return nil
 	}
